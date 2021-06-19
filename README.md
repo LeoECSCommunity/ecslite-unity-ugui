@@ -89,15 +89,12 @@ public class Test1System : IEcsInitSystem {
 
 public class Test2System : IEcsInitSystem {
     // ugui injected fields.
-    [EcsUiNamed("MyButton")] GameObject _btnGo;
-    [EcsUiNamed("MyButton")] Transform _btnTransform;
-    [EcsUiNamed("MyButton")] Button _btn;
+    [EcsUguiNamed("MyButton")] GameObject _btnGo;
+    [EcsUguiNamed("MyButton")] Transform _btnTransform;
+    [EcsUguiNamed("MyButton")] Button _btn;
 
     public void Init (EcsSystems systems) {
-        // All fields above will be filled with same values as in Test1System:
-        // _btnGo = _ui.GetNamedObject ("MyButton");
-        // _btnTransform = _ui.GetNamedObject ("MyButton").GetComponent<Transform> ();
-        // _btn = _ui.GetNamedObject ("MyButton").GetComponent<Button> ();
+        // All fields above will be filled with same values as in Test1System.
     }
 }
 ```
