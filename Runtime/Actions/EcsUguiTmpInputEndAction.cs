@@ -5,17 +5,25 @@
 // Copyright (c) 2021 Leopotam <leopotam@gmail.com>
 // ----------------------------------------------------------------------------
 
-using UnityEngine.EventSystems;
+using TMPro;
+using UnityEngine;
 
 namespace Leopotam.EcsLite.Unity.Ugui {
-    public sealed class EcsUguiClickAction : EcsUguiActionBase<EcsUguiClickEvent>, IPointerClickHandler {
-        public void OnPointerClick (PointerEventData eventData) {
+    [RequireComponent (typeof (TMP_InputField))]
+    public sealed class EcsUguiTmpInputEndAction : EcsUguiActionBase<EcsUguiTmpInputEndEvent> {
+        TMP_InputField _input;
+
+        protected override void Awake () {
+            _input = GetComponent<TMP_InputField> ();
+            _input.onEndEdit.AddListener (OnInputEnded);
+        }
+
+        void OnInputEnded (string value) {
             if (IsValidForEvent ()) {
                 ref var msg = ref CreateEvent ();
                 msg.WidgetName = GetWidgetName ();
-                msg.Sender = gameObject;
-                msg.Position = eventData.position;
-                msg.Button = eventData.button;
+                msg.Sender = _input;
+                msg.Value = value;
             }
         }
     }
