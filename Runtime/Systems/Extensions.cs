@@ -27,10 +27,10 @@ namespace Leopotam.EcsLite.Unity.Ugui {
         /// <param name="emitter">EcsUiEmitter instance.</param>
         /// <param name="worldName">World name.</param>
         /// <param name="skipNoExists">Not throw exception if named action not registered in emitter.</param>
-        /// <param name="skipOneFrames">Skip OneFrame-event cleanup registration.</param>
-        public static EcsSystems InjectUgui (this EcsSystems ecsSystems, EcsUguiEmitter emitter, string worldName = "ugui-events", bool skipNoExists = false, bool skipOneFrames = false) {
-            if (!skipOneFrames) {
-                InjectOneFrames (ecsSystems);
+        /// <param name="skipDelHere">Skip DelHere() registration.</param>
+        public static EcsSystems InjectUgui (this EcsSystems ecsSystems, EcsUguiEmitter emitter, string worldName = null, bool skipNoExists = false, bool skipDelHere = false) {
+            if (!skipDelHere) {
+                AddDelHereSystems (ecsSystems, worldName);
             }
             emitter.SetWorld (ecsSystems.GetWorld (worldName));
             var uiNamedType = typeof (EcsUguiNamedAttribute);
@@ -79,21 +79,21 @@ namespace Leopotam.EcsLite.Unity.Ugui {
             return ecsSystems;
         }
 
-        static void InjectOneFrames (EcsSystems ecsSystems) {
-            ecsSystems.DelHere<EcsUguiDragStartEvent> ();
-            ecsSystems.DelHere<EcsUguiDragMoveEvent> ();
-            ecsSystems.DelHere<EcsUguiDragEndEvent> ();
-            ecsSystems.DelHere<EcsUguiDropEvent> ();
-            ecsSystems.DelHere<EcsUguiClickEvent> ();
-            ecsSystems.DelHere<EcsUguiDownEvent> ();
-            ecsSystems.DelHere<EcsUguiUpEvent> ();
-            ecsSystems.DelHere<EcsUguiEnterEvent> ();
-            ecsSystems.DelHere<EcsUguiExitEvent> ();
-            ecsSystems.DelHere<EcsUguiScrollViewEvent> ();
-            ecsSystems.DelHere<EcsUguiSliderChangeEvent> ();
-            ecsSystems.DelHere<EcsUguiTmpDropdownChangeEvent> ();
-            ecsSystems.DelHere<EcsUguiTmpInputChangeEvent> ();
-            ecsSystems.DelHere<EcsUguiTmpInputEndEvent> ();
+        static void AddDelHereSystems (EcsSystems ecsSystems, string worldName) {
+            ecsSystems.DelHere<EcsUguiDragStartEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiDragMoveEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiDragEndEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiDropEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiClickEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiDownEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiUpEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiEnterEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiExitEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiScrollViewEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiSliderChangeEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiTmpDropdownChangeEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiTmpInputChangeEvent> (worldName);
+            ecsSystems.DelHere<EcsUguiTmpInputEndEvent> (worldName);
         }
     }
 }
