@@ -5,7 +5,8 @@ Bindings for events from Unity uGui to [LeoECS Lite](https://github.com/Leopotam
 
 > Tested on unity 2020.3 (dependent on it) and contains assembly definition for compiling to separate assembly file for performance reason.
 
-> Dependent on [LeoECS Lite](https://github.com/Leopotam/ecslite) - ECS framework should be imported to unity project first.
+> Dependent on [LeoECS Lite](https://github.com/Leopotam/ecslite) - dependency should be imported to unity project first.
+> Dependent on [LeoECS Lite Extended systems](https://github.com/Leopotam/ecslite-extendedsystems) - dependency should be imported to unity project first.
 
 # Table of content
 * [Socials](#socials)

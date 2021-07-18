@@ -7,6 +7,7 @@
 
 using System;
 using System.Reflection;
+using Leopotam.EcsLite.ExtendedSystems;
 using UnityEngine;
 
 namespace Leopotam.EcsLite.Unity.Ugui {
