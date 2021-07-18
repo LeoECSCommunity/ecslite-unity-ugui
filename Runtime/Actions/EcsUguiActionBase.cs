@@ -34,6 +34,9 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                 ValidateEmitter ();
                 _emitter.SetNamedObject (_widgetName, gameObject);
             }
+            if (_nameRegistrationType == EcsUguiActionNameRegistrationType.None) {
+                ValidateEmitter ();
+            }
         }
 
         void OnDestroy () {
@@ -49,21 +52,21 @@ namespace Leopotam.EcsLite.Unity.Ugui {
             }
 #if DEBUG
             if (_emitter == null) {
-                Debug.LogError ("EcsUiEmitter not found in hierarchy", this);
+                Debug.LogError ("EcsUguiEmitter not found in hierarchy", this);
             }
 #endif
-            _pool = _emitter.GetWorld ().GetPool<T> ();
         }
 
         protected bool IsValidForEvent () {
             if (!_emitter) { return false; }
 #if DEBUG
-            if (_emitter.GetWorld () == null) { throw new System.Exception ("[EcsUiEmitter] Call EcsSystems.InjectUi() first."); }
+            if (_emitter.GetWorld () == null) { throw new System.Exception ("[EcsUguiEmitter] Call EcsSystems.InjectUi() first."); }
 #endif
             return _emitter.GetWorld ().IsAlive () && (_selectable == null || _selectable.interactable);
         }
 
         protected ref T CreateEvent () {
+            _pool ??= _emitter.GetWorld ().GetPool<T> ();
             return ref _pool.Add (_emitter.GetWorld ().NewEntity ());
         }
 
