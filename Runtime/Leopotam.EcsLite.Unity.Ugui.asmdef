@@ -3,6 +3,7 @@
     "rootNamespace": "Leopotam.EcsLite.Unity.Ugui",
     "references": [
         "Leopotam.EcsLite",
+        "Leopotam.EcsLite.ExtendedSystems",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [],

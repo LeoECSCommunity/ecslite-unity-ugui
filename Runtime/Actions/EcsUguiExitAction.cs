@@ -8,17 +8,7 @@
 using UnityEngine.EventSystems;
 
 namespace Leopotam.EcsLite.Unity.Ugui {
-    public sealed class EcsUguiEnterAction : EcsUguiActionBase<EcsUguiEnterEvent>, IPointerEnterHandler {
-        public void OnPointerEnter (PointerEventData eventData) {
-            if (IsValidForEvent ()) {
-                ref var msg = ref CreateEvent ();
-                msg.WidgetName = GetWidgetName ();
-                msg.Sender = gameObject;
-            }
-        }
-    }
-
-    public sealed class EcsUguiExitAction : EcsUguiActionBase<EcsUguiEnterEvent>, IPointerExitHandler {
+    public sealed class EcsUguiExitAction : EcsUguiActionBase<EcsUguiExitEvent>, IPointerExitHandler {
         public void OnPointerExit (PointerEventData eventData) {
             if (IsValidForEvent ()) {
                 ref var msg = ref CreateEvent ();
