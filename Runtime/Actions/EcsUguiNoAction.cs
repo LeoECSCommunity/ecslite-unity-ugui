@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 namespace Leopotam.EcsLite.Unity.Ugui {
-    public struct EcsUiNoActionEvent { }
+    public struct EcsUguiNoActionEvent { }
 
-    public sealed class EcsUguiNoAction : EcsUguiActionBase<EcsUiNoActionEvent> { }
+    public sealed class EcsUguiNoAction : EcsUguiActionBase<EcsUguiNoActionEvent> { }
 }
