@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace Leopotam.EcsLite.Unity.Ugui {
-    [AttributeUsage (AttributeTargets.Method)]
+    [AttributeUsage (AttributeTargets.Method, AllowMultiple = true)]
     public abstract class EcsUguiEventAttribute : Attribute {
         public readonly string WidgetName;
         public readonly string WorldName;
