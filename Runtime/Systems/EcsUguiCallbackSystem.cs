@@ -130,45 +130,7 @@ namespace Leopotam.EcsLite.Unity.Ugui {
             }
         }
 
-        static void CheckAttribute<T1, T2> (MethodInfo m, EcsSystems systems, EcsUguiCallbackSystem system, ref List<UguiEventDesc<T2>> list)
-            where T1 : EcsUguiEventAttribute where T2 : struct {
-            var attrType = typeof (T1);
-            if (Attribute.IsDefined (m, attrType)) {
-                RegisterCallback ((T1) Attribute.GetCustomAttribute (m, attrType), m, systems, system, ref list);
-            }
-        }
-
-        static void RegisterCallback<T> (EcsUguiEventAttribute attr, MethodInfo methodInfo, EcsSystems systems, EcsUguiCallbackSystem system, ref List<UguiEventDesc<T>> list)
-            where T : struct {
-            var world = systems.GetWorld (attr.WorldName);
-            var name = string.IsNullOrEmpty (attr.WidgetName) ? null : attr.WidgetName;
-#if DEBUG
-            if (world == null) {
-                throw new Exception ($"World for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{name ?? "<ANY>"}\" not exist.");
-            }
-#endif
-            UserCallback<T> cb = default;
-#if DEBUG
-            try {
-                cb = (UserCallback<T>) Delegate.CreateDelegate (
-                    typeof (UserCallback<T>),
-                    system,
-                    methodInfo);
-            } catch {
-                // ignored
-            }
-            if (cb == null) { throw new Exception ($"Callback method for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{attr.WidgetName}\" not compatible, should be \"void MethodName(in {typeof (T).Name} eventName) {{}}\"."); }
-#else
-            cb = (UserCallback<T>) Delegate.CreateDelegate (
-                typeof (Action<T>),
-                system,
-                methodInfo);
-#endif
-            list ??= new List<UguiEventDesc<T>> ();
-            list.Add (new UguiEventDesc<T> (world.Filter<T> ().End (), world.GetPool<T> (), name, cb));
-        }
-
-        public void Run (EcsSystems systems) {
+        public virtual void Run (EcsSystems systems) {
             if (_clicks != null) {
                 foreach (var item in _clicks) {
                     foreach (var entity in item.Filter) {
@@ -281,6 +243,44 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                     }
                 }
             }
+        }
+        
+        static void CheckAttribute<T1, T2> (MethodInfo m, EcsSystems systems, EcsUguiCallbackSystem system, ref List<UguiEventDesc<T2>> list)
+            where T1 : EcsUguiEventAttribute where T2 : struct {
+            var attrType = typeof (T1);
+            if (Attribute.IsDefined (m, attrType)) {
+                RegisterCallback ((T1) Attribute.GetCustomAttribute (m, attrType), m, systems, system, ref list);
+            }
+        }
+
+        static void RegisterCallback<T> (EcsUguiEventAttribute attr, MethodInfo methodInfo, EcsSystems systems, EcsUguiCallbackSystem system, ref List<UguiEventDesc<T>> list)
+            where T : struct {
+            var world = systems.GetWorld (attr.WorldName);
+            var name = string.IsNullOrEmpty (attr.WidgetName) ? null : attr.WidgetName;
+#if DEBUG
+            if (world == null) {
+                throw new Exception ($"World for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{name ?? "<ANY>"}\" not exist.");
+            }
+#endif
+            UserCallback<T> cb = default;
+#if DEBUG
+            try {
+                cb = (UserCallback<T>) Delegate.CreateDelegate (
+                    typeof (UserCallback<T>),
+                    system,
+                    methodInfo);
+            } catch {
+                // ignored
+            }
+            if (cb == null) { throw new Exception ($"Callback method for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{attr.WidgetName}\" not compatible, should be \"void MethodName(in {typeof (T).Name} eventName) {{}}\"."); }
+#else
+            cb = (UserCallback<T>) Delegate.CreateDelegate (
+                typeof (Action<T>),
+                system,
+                methodInfo);
+#endif
+            list ??= new List<UguiEventDesc<T>> ();
+            list.Add (new UguiEventDesc<T> (world.Filter<T> ().End (), world.GetPool<T> (), name, cb));
         }
 
         static void CallUserMethod<T> (in T e, string widgetName, UguiEventDesc<T> desc) where T : struct {
