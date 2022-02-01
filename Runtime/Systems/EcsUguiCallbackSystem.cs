@@ -244,7 +244,7 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                 }
             }
         }
-        
+
         static void CheckAttribute<T1, T2> (MethodInfo m, EcsSystems systems, EcsUguiCallbackSystem system, ref List<UguiEventDesc<T2>> list)
             where T1 : EcsUguiEventAttribute where T2 : struct {
             var attrType = typeof (T1);
@@ -258,26 +258,14 @@ namespace Leopotam.EcsLite.Unity.Ugui {
             var world = systems.GetWorld (attr.WorldName);
             var name = string.IsNullOrEmpty (attr.WidgetName) ? null : attr.WidgetName;
 #if DEBUG
-            if (world == null) {
-                throw new Exception ($"World for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{name ?? "<ANY>"}\" not exist.");
-            }
+            if (world == null) { throw new Exception ($"World for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{name ?? "<ANY>"}\" not exist."); }
 #endif
-            UserCallback<T> cb = default;
-#if DEBUG
-            try {
-                cb = (UserCallback<T>) Delegate.CreateDelegate (
-                    typeof (UserCallback<T>),
-                    system,
-                    methodInfo);
-            } catch {
-                // ignored
-            }
-            if (cb == null) { throw new Exception ($"Callback method for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{attr.WidgetName}\" not compatible, should be \"void MethodName(in {typeof (T).Name} eventName) {{}}\"."); }
-#else
-            cb = (UserCallback<T>) Delegate.CreateDelegate (
-                typeof (Action<T>),
+            var cb = (UserCallback<T>) Delegate.CreateDelegate (
+                typeof (UserCallback<T>),
                 system,
-                methodInfo);
+                methodInfo, false);
+#if DEBUG
+            if (cb == null) { throw new Exception ($"Callback method for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{attr.WidgetName}\" not compatible, should be \"void MethodName(in {typeof (T).Name} eventName) {{}}\"."); }
 #endif
             list ??= new List<UguiEventDesc<T>> ();
             list.Add (new UguiEventDesc<T> (world.Filter<T> ().End (), world.GetPool<T> (), name, cb));
