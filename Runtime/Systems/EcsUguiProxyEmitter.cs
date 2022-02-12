@@ -39,7 +39,7 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                 : GetComponentInParent<EcsUguiEmitter> ();
             // fix for GetComponentInParent.
             if (parent == this) { parent = null; }
-#if DEBUG
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
             if (parent == null) {
                 Debug.LogError ("EcsUiEmitter not found in hierarchy", this);
                 return false;

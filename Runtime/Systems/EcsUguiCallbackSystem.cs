@@ -257,14 +257,14 @@ namespace Leopotam.EcsLite.Unity.Ugui {
             where T : struct {
             var world = systems.GetWorld (attr.WorldName);
             var name = string.IsNullOrEmpty (attr.WidgetName) ? null : attr.WidgetName;
-#if DEBUG
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
             if (world == null) { throw new Exception ($"World for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{name ?? "<ANY>"}\" not exist."); }
 #endif
             var cb = (UserCallback<T>) Delegate.CreateDelegate (
                 typeof (UserCallback<T>),
                 system,
                 methodInfo, false);
-#if DEBUG
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
             if (cb == null) { throw new Exception ($"Callback method for \"{typeof (T).Name}\" event in system \"{system.GetType ().Name}\" for widget \"{attr.WidgetName}\" not compatible, should be \"void MethodName(in {typeof (T).Name} eventName) {{}}\"."); }
 #endif
             list ??= new List<UguiEventDesc<T>> ();
