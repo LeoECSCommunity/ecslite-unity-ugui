@@ -15,6 +15,7 @@ Bindings for events from Unity uGui to [LeoECS Lite](https://github.com/Leopotam
     * [As source](#as-source)
 * [Integration](#integration)
     * [EcsUguiEmitter](#ecsuguiemitter)
+    * [EcsUguiCallbackSystem](#ecsuguicallbacksystem)
     * [Actions](#actions)
     * [Components](#components)
 * [License](#license)
@@ -100,6 +101,48 @@ public class Test2System : IEcsInitSystem {
 }
 ```
 
+## EcsUguiCallbackSystem
+Methods can be directly subscribed to ugui events through `EcsUguiCallbackSystem`:
+```csharp
+public class TestUguiClickEventSystem : EcsUguiCallbackSystem {
+    [Preserve] // for fix possible il2cpp dead code elimination.
+    [EcsUguiClickEvent]
+    void OnAnyClick (in EcsUguiClickEvent evt) {
+        Debug.Log ("Im clicked!", evt.Sender);
+    }
+    
+    // method will be called only on "exit-button" widget click event. 
+    [Preserve]
+    [EcsUguiClickEvent("exit-button")]
+    void OnExitButtonClicked (in EcsUguiClickEvent evt) {
+        Debug.Log ("exit-button clicked!", evt.Sender);
+    }
+    
+    // method will be called only on "exit-button" widget click event at "events" world. 
+    [Preserve]
+    [EcsUguiClickEvent("exit-button", "events")]
+    void OnExitButtonClicked (in EcsUguiClickEvent evt) {
+        Debug.Log ("exit-button clicked!", evt.Sender);
+    }
+}
+```
+Supported attributes:
+```csharp
+[EcsUguiClickEvent]
+[EcsUguiUpEvent]
+[EcsUguiDownEvent]
+[EcsUguiDragStartEvent]
+[EcsUguiDragMoveEvent]
+[EcsUguiDragEndEvent]
+[EcsUguiEnterEvent]
+[EcsUguiExitEvent]
+[EcsUguiScrollViewEvent]
+[EcsUguiSliderChangeEvent]
+[EcsUguiTmpDropdownChangeEvent]
+[EcsUguiTmpInputChangeEvent]
+[EcsUguiTmpInputEndEvent]
+[EcsUguiDropEvent]
+```
 ## Actions
 MonoBehaviours that should be added to uGui widgets to transfer events from them to `ecs-world` (`EcsUguiClickAction`, `EcsUguiDragAction` and others). Each action component contains reference to `EcsUguiEmitter` in scene (if not inited manually - will try to find emitter automatically on start) and logical name `WidgetName` that can helps to detect source of event (or just get named `GameObject`) inside ecs-system.
 

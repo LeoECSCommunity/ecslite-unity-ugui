@@ -2,7 +2,7 @@
 // The MIT License
 // Ugui bindings https://github.com/Leopotam/ecslite-unity-ugui
 // for LeoECS Lite https://github.com/Leopotam/ecslite
-// Copyright (c) 2021 Leopotam <leopotam@gmail.com>
+// Copyright (c) 2021-2022 Leopotam <leopotam@gmail.com>
 // ----------------------------------------------------------------------------
 
 using System;
@@ -57,7 +57,7 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                         continue;
                     }
                     var name = ((EcsUguiNamedAttribute) Attribute.GetCustomAttribute (f, uiNamedType)).Name;
-#if DEBUG
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
                     if (string.IsNullOrEmpty (name)) { throw new Exception ($"Cant Inject field \"{f.Name}\" at \"{systemType}\" due to [EcsUiNamed] \"Name\" parameter is invalid."); }
                     if (!(f.FieldType == goType || componentType.IsAssignableFrom (f.FieldType))) {
                         throw new Exception ($"Cant Inject field \"{f.Name}\" at \"{systemType}\" due to [EcsUiNamed] attribute can be applied only to GameObject or Component type.");

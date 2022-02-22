@@ -2,7 +2,7 @@
 // The MIT License
 // Ugui bindings https://github.com/Leopotam/ecslite-unity-ugui
 // for LeoECS Lite https://github.com/Leopotam/ecslite
-// Copyright (c) 2021 Leopotam <leopotam@gmail.com>
+// Copyright (c) 2021-2022 Leopotam <leopotam@gmail.com>
 // ----------------------------------------------------------------------------
 
 using System;
@@ -18,7 +18,7 @@ namespace Leopotam.EcsLite.Unity.Ugui {
         readonly Dictionary<int, GameObject> _actions = new Dictionary<int, GameObject> (64);
 
         internal void SetWorld (EcsWorld world) {
-#if DEBUG
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
             if (_world != null) { throw new Exception ("World already attached."); }
 #endif
             _world = world;
@@ -34,9 +34,12 @@ namespace Leopotam.EcsLite.Unity.Ugui {
                 if (_actions.ContainsKey (id)) {
                     if (!go) {
                         _actions.Remove (id);
-                    } else {
+                    }
+#if DEBUG && !LEOECSLITE_NO_SANITIZE_CHECKS
+                    if (go) {
                         throw new Exception ($"Action with \"{widgetName}\" name already registered");
                     }
+#endif
                 } else {
                     if ((object) go != null) {
                         _actions[id] = go.gameObject;
