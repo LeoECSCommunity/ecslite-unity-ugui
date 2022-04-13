@@ -1,12 +1,12 @@
 # Unity uGui bindings for LeoECS Lite
-Bindings for events from Unity uGui to [LeoECS Lite](https://github.com/Leopotam/ecslite).
+Bindings for events from Unity uGui to [LeoECS Lite](https://github.com/LeoECSCommunity/ecslite).
 
 > C#7.3 or above required for this framework.
 
 > Tested on unity 2020.3 (dependent on it) and contains assembly definition for compiling to separate assembly file for performance reason.
 
-> Dependent on [LeoECS Lite](https://github.com/Leopotam/ecslite) - dependency should be imported to unity project first.
-> Dependent on [LeoECS Lite Extended systems](https://github.com/Leopotam/ecslite-extendedsystems) - dependency should be imported to unity project first.
+> Dependent on [LeoECS Lite](https://github.com/LeoECSCommunity/ecslite) - dependency should be imported to unity project first.
+> Dependent on [LeoECS Lite Extended systems](https://github.com/LeoECSCommunity/ecslite-extendedsystems) - dependency should be imported to unity project first.
 
 # Table of content
 * [Socials](#socials)
@@ -21,18 +21,20 @@ Bindings for events from Unity uGui to [LeoECS Lite](https://github.com/Leopotam
 * [License](#license)
 
 # Socials
-[![discord](https://img.shields.io/discord/404358247621853185.svg?label=enter%20to%20discord%20server&style=for-the-badge&logo=discord)](https://discord.gg/5GZVde6)
+[![discord](https://img.shields.io/discord/963730852452388894.svg?label=New%20Community%20Discord%20server&style=for-the-badge&logo=discord)](https://discord.gg/ZAhCUv5YQt)
+
+[![discord](https://img.shields.io/discord/404358247621853185.svg?label=Old%20Leo%20Discord%20server&style=for-the-badge&logo=discord)](https://discord.gg/5GZVde6)
 
 # Installation
 
 ## As unity module
 This repository can be installed as unity module directly from git url. In this way new line should be added to `Packages/manifest.json`:
 ```
-"com.leopotam.ecslite.unity.ugui": "https://github.com/Leopotam/ecslite-unity-ugui.git",
+"com.leoecscommunity.ecslite.unity.ugui": "https://github.com/LeoECSCommunity/ecslite-unity-ugui.git",
 ```
 By default last released version will be used. If you need trunk / developing version then `develop` name of branch should be added after hash:
 ```
-"com.leopotam.ecslite.unity.ugui": "https://github.com/Leopotam/ecslite-unity-ugui.git#develop",
+"com.leoecscommunity.ecslite.unity.ugui": "https://github.com/LeoECSCommunity/ecslite-unity-ugui.git#develop",
 ```
 
 ## As source
