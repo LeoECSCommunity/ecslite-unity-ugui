@@ -1,10 +1,10 @@
 {
-    "name": "com.leopotam.ecslite.unity.ugui",
-    "author": "Leopotam",
-    "displayName": "LeoECS Lite uGui Bindings",
-    "description": "uGui bindings for LeoECS Lite.",
+    "name": "com.leoecscommunity.ecslite.unity.ugui",
+    "author": "LeoECSCommunity",
+    "displayName": "LeoECSCommunity Lite uGui Bindings",
+    "description": "uGui bindings for LeoECSCommunity Lite.",
     "unity": "2020.3",
-    "version": "2022.2.22",
+    "version": "1.0.0",
     "keywords": [
         "leoecslite",
         "leoecs",
@@ -15,6 +15,6 @@
     "dependencies": {},
     "repository": {
         "type": "git",
-        "url": "https://github.com/Leopotam/ecslite-unity-ugui.git"
+        "url": "https://github.com/LeoECSCommunity/ecslite-unity-ugui.git"
     }
 }
